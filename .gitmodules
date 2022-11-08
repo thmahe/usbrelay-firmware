@@ -1,0 +1,3 @@
+[submodule "submodules/v-usb"]
+	path = submodules/v-usb
+	url = git@github.com:obdev/v-usb.git
