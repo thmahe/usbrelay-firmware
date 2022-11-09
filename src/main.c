@@ -29,6 +29,7 @@
 
 /* Change RELAY_PORT and RELAY_BIT according to your targeted hardware */
 /* Given example below, first relay is mapped on pin PC0 (atmega8)     */
+uint8_t *OUPTUT_REG[RELAY_COUNT] = {&DDRC, &DDRC, &DDRC, &DDRC};
 uint8_t *RELAY_PORT[RELAY_COUNT] = {&PORTC, &PORTC, &PORTC, &PORTC};
 int RELAY_BIT[RELAY_COUNT] = {0, 1, 2, 3};
 
@@ -157,7 +158,27 @@ uchar usbFunctionRead(uchar *data, uchar len) {
 
 /* Called when the host sends a chunk of data to the device.*/
 uchar usbFunctionWrite(uchar *data, uchar len) {
-  if (data[0] == CMD_SET_SERIAL) {
+  /* data[0] : command code received from host
+   * data[1] : relay number to operate or new serial number
+   * When data[1] > relay number, command is applied to all relays
+   */
+  if (data[0] == CMD_ON) {
+    if (data[1] > RELAY_COUNT) {
+      for (int j = 0; j < RELAY_COUNT; j++) {
+        *RELAY_PORT[j] |= _BV(RELAY_BIT[j]);
+      }
+      return len;
+    }
+    *RELAY_PORT[data[1] - 1] |= _BV(RELAY_BIT[data[1] - 1]);
+  } else if (data[0] == CMD_OFF) {
+    if (data[1] > RELAY_COUNT) {
+      for (int j = 0; j < RELAY_COUNT; j++) {
+        *RELAY_PORT[j] &= ~_BV(RELAY_BIT[j]);
+      }
+      return len;
+    }
+    *RELAY_PORT[data[1] - 1] &= ~_BV(RELAY_BIT[data[1] - 1]);
+  } else if (data[0] == CMD_SET_SERIAL) {
     update_serial_number(SERIAL_NUMBER, &data[1], SERIAL_NUMBER_LEN);
   }
   return len;
@@ -180,6 +201,11 @@ int main(void) {
     _delay_ms(1);
   }
   usbDeviceConnect();
+
+  // set relay bit as output
+  for (uint8_t j = 0; j < RELAY_COUNT; j++) {
+    *OUPTUT_REG[j] |= _BV(RELAY_BIT[j]);
+  }
 
   // enable interrupts
   sei();
