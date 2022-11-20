@@ -29,7 +29,7 @@
 * [X] Compatible with [darrylb123/usbrelay](https://github.com/darrylb123/usbrelay) host software
    * [X] Read/Write relay state
    * [X] Change serial number
-* [ ] Hardware schematics (WIP)
+* [X] Hardware schematics
 
 ## Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project ready to be deployed on your hardware. 
@@ -161,3 +161,5 @@ int RELAY_BIT[RELAY_COUNT] = {0, 1, 2, 3};
 ```
 
 Given mapping above, relay 1 is controlled using PC0 pin.
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fthmahe%2Fusbrelay-firmware&count_bg=%23868686&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
