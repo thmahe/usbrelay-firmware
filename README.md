@@ -13,7 +13,7 @@
 
 ---
 
-<p align="center"> Atmel AVR Firmware for controlling relay board with V-USB
+<p align="center"> Atmel AVR Firmware for controlling relay board with V-USB (<a href="https://www.obdev.at/vusb/">https://www.obdev.at/vusb/</a>)
     <br>
     Compatible with www.dcttech.com relay boards
     <br> 
