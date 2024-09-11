@@ -51,6 +51,12 @@ To build usbrelay-firmware simply follow steps below
 ```shell
 $ git clone git@github.com:thmahe/usbrelay-firmware.git
 $ cd usbrelay
+
+# Fetch v-usb submodule
+$ git submodule init
+$ git submodule update
+
+# Build firmware
 $ make firmware
 ```
 
